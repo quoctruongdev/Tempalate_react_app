@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+// import { useDispatch } from "react-redux";
+// import { useEffect } from "react";
 
-function App() {
+import { Switch, withRouter, Route } from "react-router";
+import { renderRoutesAdmin, renderRoutesHome } from "./routes";
+import AuthPage from "./containers/AdminTemplate/AuthPage";
+import PageNotFound from "./containers/PageNotFound";
+import { Suspense } from "react";
+import Loader from "./components/Loader/Loader";
+// import { actTryLogin } from "./containers/Admin/AuthPage/modules/actions";
+// import BackToTop from "./components/BackToTop/BackToTop";
+// import { actTryLoginHome } from "./containers/Home/_components/Login/modules/actions";
+
+function App(props) {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(actTryLogin(props.history));
+  //   dispatch(actTryLoginHome(props.history));
+  // }, [dispatch, props.history]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense
+      fallback={
+        <>
+          <Loader />
+        </>
+      }
+    >
+      {/* <BackToTop /> */}
+      <Switch>
+        {renderRoutesHome()}
+        {renderRoutesAdmin()}
+        <Route path="/auth" component={AuthPage} />
+        <Route path="" component={PageNotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
-export default App;
+export default withRouter(App);
