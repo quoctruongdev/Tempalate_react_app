@@ -1,5 +1,10 @@
 import React from "react";
+import Loader from "../../components/Loader/Loader";
 
 export default function HomeTemplate() {
-  return <div>HomeTemplate</div>;
+  return (
+    <div>
+      <Loader />
+    </div>
+  );
 }
